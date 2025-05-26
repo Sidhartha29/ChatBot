@@ -1,10 +1,20 @@
 from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
+import os
 import google.generativeai as genai
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
-# Configure the Google API key (replace with your actual key)
-GOOGLE_API_KEY = "AIzaSyCsbQb-Nejtln5r_IhroqZm5d3Qm1goC9I"
+# Get the Google API key from environment variable
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+# Check if the API key exists
+if not GOOGLE_API_KEY:
+    raise EnvironmentError("GOOGLE_API_KEY not set in environment variables")
+
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Initialize the model once
